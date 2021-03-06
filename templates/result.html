@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% if result | length < 1 %}
+    <div class="alert alert-danger text-center" role="alert">
+        No files found with the extension: <b>{{extension}}</b>
+    </div>
+{% else %}
+<div class="alert alert-success text-center" role="alert">
+    <b> {{result | length}}</b> file(s) found!
+</div>
+<!-- {{ result }} -->
+<div class="container p-2 overflow-custom text-monospace shadow-sm bg-light rounded" contenteditable="true">
+    {% for x in result %}
+    {{ x }}<br><br>
+    {% endfor %}
+</div>
+{% endif %}
+<br>
+<div class="container">
+    <!-- Button to go back to the home -->
+    <button type="button" onclick="window.location.href='{{ url_for( 'index' ) }}';"
+    class="btn btn-danger btn-lg btn-block">Back to Home</button>
+    <br>
+</div>
+{% endblock %}

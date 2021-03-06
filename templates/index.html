@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% from "includes/_formhelpers.html" import render_field %}
+<div class="jumbotron text-center">
+    <style>
+        h1 {
+            font-family: 'Allerta Stencil';
+            font-size: 43px;
+            color: #192a56;
+            /* color: #491c2b; */
+        }
+    </style>
+    <h1 class="senti">{{app_name}}</h1> <br />
+    <!-- Search form -->
+    <style>
+        .active-pink-4 input[type=text]:focus:not([readonly]) {
+            border: 1px solid #4cd137;
+            box-shadow: 0 0 0 1px #4cd137;
+            /* #f76293 */
+        }
+
+        .active-pink-4 input[type=text]:hover:not([readonly]) {
+            border: 1px solid #f13272;
+            box-shadow: 0 0 0 1px #f13272;
+            /* #f48fb1 */
+        }
+    </style>
+    <div class="text-center">
+        <p> <b>Note:</b> Make sure to input both URL and extension</p>
+    </div>
+    <!-- Search form -->
+
+    <form method="POST" action="">
+        {{ form.csrf }}
+        <div class="active-pink-3 active-pink-4 mb-4">
+            <input class="form-control text-center" id="input_url" name="input_url" type="text"
+                placeholder="URL" aria-label="Search">
+        </div>
+        <div class="active-pink-3 active-pink-4 mb-4">
+            <input class="form-control text-center" id="extension" name="extension" type="text"
+                placeholder="extension" aria-label="Search">
+        </div>
+    </form>
+    <!-- spinner when tweets are extracted in the background -->
+    <script type="text/javascript">
+        function spinner() {
+            document.getElementById("spinner").innerHTML = '<div class="spinner-border text-danger" role="status"> <span class="sr-only">Loading...</span> </div>';
+            document.forms[0].submit();
+        }
+    </script>
+    <script>
+
+        document.getElementById('extension').addEventListener('keypress', function (event) {
+            if (event.keyCode == 13) {
+                spinner();
+            }
+        });
+    </script>
+    <div id="spinner"></div>
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+        {% endif %}
+
+</div>
+
+<div id="flash"></div>
+{% if invalid %}
+<p>{{ invalid }}</p>
+{% endif %}
+
+{% endblock %}
