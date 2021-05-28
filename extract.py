@@ -1,49 +1,52 @@
 #!/usr/bin/python3.8
 import sys
+from typing import List
 from bs4 import BeautifulSoup
 import requests
-import re
-
-# Source: https://stackoverflow.com/a/34718858
-
-#url = 'http://cdimage.debian.org/debian-cd/8.2.0-live/i386/iso-hybrid/'
-#ext = 'iso'
-# url = sys.argv[1]
-# ext = sys.argv[2]
-
-def listFD(url, ext=''):
-    try:
-        page = requests.get(url).text
-        #print(page)
-        soup = BeautifulSoup(page, 'html.parser')
-        #return [url + '/' + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(ext)]
-        return [url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(ext)]
-    except Exception as e:
-        return ['Something went wrong! Please check the input.']
-
-# for file in listFD(url, ext):
-#     print(file)
+import argparse
 
 
+class GetFileLinks():
+    """Get direct links of all the files with a specific extension on the HTML page.
+    """
+    def __init__(self, url, ext) -> None:
+        self.url = url
+        self.ext = ext
 
-#
-#url = sys.argv[1]
-#extension = sys.argv[2]
-#
-#print(url)
-#print(extension)
-#
-##exit()
-#
-#with open('index.html') as html_file:
-#    soup = BeautifulSoup(html_file, "lxml")
-#
-#for item in soup.select("a[href$='.mkv']"):
-#    print(item['href'])
-#
-##links = []
-##for link in soup.findAll('a'):
-##        links.append(link.get('href'))    
-##for link in links:
-##    print(link)
+    def get_file_links(self) -> List:
+        """Extract links from webpage and return list of URL with the provided extension.
 
+        Args:
+            url ([str]): URL to a webpage
+            ext ([str]): extension of files whose direct links need to be extracted
+                            from the provided URL
+
+        Returns:
+            List: List of URL with extension
+        """
+        try:
+            page = requests.get(self.url).text
+            soup = BeautifulSoup(page, 'html.parser')
+            #Adapted from: https://stackoverflow.com/a/34718858
+            return [self.url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(self.ext)]
+        except Exception as e:
+            return ['Something went wrong! Please check the input.']
+
+
+if __name__ == '__main__':
+    url_args = argparse.ArgumentParser(description='Extract urls from index of/ page')
+    url_args.add_argument('--url',
+                            help='Index of/ page URL', 
+                            required=True,
+                            type=str)
+    url_args.add_argument('--ext',
+                            help='Extension of the file URL to extract', 
+                            required=True,
+                            type=str)
+
+    args = url_args.parse_args()
+    url = args.url
+    ext = args.ext
+
+    index_of = GetFileLinks(url, ext)
+    index_of.get_file_links()
