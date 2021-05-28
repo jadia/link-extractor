@@ -38,6 +38,7 @@ jobs:
           pytest
 
   push: # Push to Container registry
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
