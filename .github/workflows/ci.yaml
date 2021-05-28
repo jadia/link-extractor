@@ -11,8 +11,6 @@ on:
       - 'junk/workflow'
 
 jobs:
-  strategy:
-    max-parallel: 1
   build: # Build job
     runs-on: ubuntu-latest
     strategy:
