@@ -68,7 +68,7 @@ jobs:
           IMAGE_NAME=${REPO_NAME}
 
           tmpName="image-$RANDOM"
-          docker build --file Dockerfile --tag $tmpName
+          docker build --tag $tmpName .
           #IMAGE_ID=${{ secrets.DOCKER_REGISTRY_URL }}/$REPOSITORY/$IMAGE_NAME
           IMAGE_ID=$DOCKER_REGISTRY_URL/$GITHUB_REPOSITORY/$IMAGE_NAME
           VERSION=$(cat $versionFilePath)
