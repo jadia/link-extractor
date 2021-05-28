@@ -19,6 +19,12 @@
 <br>
 <div class="container">
     <!-- Button to go back to the home -->
+    <button type="button" onclick="window.location.href='{{ url_for( 'download_url_file', file_name=file_name ) }}';"
+    class="btn btn-primary btn-lg btn-block">Download URI file</button>
+    <br>
+</div>
+<div class="container">
+    <!-- Button to go back to the home -->
     <button type="button" onclick="window.location.href='{{ url_for( 'index' ) }}';"
     class="btn btn-danger btn-lg btn-block">Back to Home</button>
     <br>

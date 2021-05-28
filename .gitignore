@@ -1,6 +1,8 @@
 # Custom 
 .vscode/
 old_*.py
+files/*
+playground*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
