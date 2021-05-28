@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for
 from wtforms import Form, TextField, TextAreaField, StringField, SubmitField, validators
-from extract import listFD
+from extract import GetFileLinks
 from datetime import datetime as dt
 
 
@@ -17,8 +17,12 @@ def index():
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         print("Post request")
-        # return render_template('result.html', result=listFD(request.form['input_url'], 'mkv'))
-        return render_template('result.html', extension=request.form['extension'], result=listFD(request.form['input_url'], request.form['extension']))
+        url = request.form['input_url']
+        ext = request.form['extension']
+        file_links = GetFileLinks(url, ext)
+        return render_template('result.html', 
+                                extension=request.form['extension'], 
+                                result=file_links.get_file_links())
     else:
         print("Get request.")
         return render_template('index.html', form=form)
@@ -39,4 +43,4 @@ def not_found(e):
     return render_template("404.html") 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=5000)
