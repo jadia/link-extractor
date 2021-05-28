@@ -3,10 +3,12 @@ name: Docker
 on:
   push:
     branches:
-      - ['master', 'junk/workflow']
+      - master
+      - 'junk/workflow'
   pull_request:
     branches:
-      - ['master', 'junk/workflow']
+      - master
+      - 'junk/workflow'
 
 jobs:
   build: # Build job
