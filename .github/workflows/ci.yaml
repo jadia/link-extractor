@@ -64,14 +64,13 @@ jobs:
         run: |
           # Using the env var: https://github.com/actions/starter-workflows/issues/68#issuecomment-642514933
           source ~/.bashrc
-          folder=${versionFilePath%"/VERSION"}
           IMAGE_NAME=${REPO_NAME}
 
           tmpName="image-$RANDOM"
           docker build --tag $tmpName .
           #IMAGE_ID=${{ secrets.DOCKER_REGISTRY_URL }}/$REPOSITORY/$IMAGE_NAME
           IMAGE_ID=$DOCKER_REGISTRY_URL/$GITHUB_REPOSITORY/$IMAGE_NAME
-          VERSION=$(cat $versionFilePath)
+          VERSION=$(cat VERSION)
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
