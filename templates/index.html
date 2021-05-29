@@ -2,71 +2,65 @@
 
 {% block body %}
 {% from "includes/_formhelpers.html" import render_field %}
-<div class="jumbotron text-center">
-    <style>
-        h1 {
-            font-family: 'Allerta Stencil';
-            font-size: 43px;
-            color: #192a56;
-            /* color: #491c2b; */
-        }
-    </style>
-    <h1 class="senti">{{app_name}}</h1> <br />
-    <!-- Search form -->
-    <style>
-        .active-pink-4 input[type=text]:focus:not([readonly]) {
-            border: 1px solid #4cd137;
-            box-shadow: 0 0 0 1px #4cd137;
-            /* #f76293 */
-        }
 
-        .active-pink-4 input[type=text]:hover:not([readonly]) {
-            border: 1px solid #f13272;
-            box-shadow: 0 0 0 1px #f13272;
-            /* #f48fb1 */
-        }
-    </style>
-    <div class="text-center">
-        <p> <b>Note:</b> Make sure to input both URL and extension</p>
-    </div>
-    <!-- Search form -->
+<!-- Spinner when form is submitted -->
 
-    <form method="POST" action="">
-        {{ form.csrf }}
-        <div class="active-pink-3 active-pink-4 mb-4">
-            <input class="form-control text-center" id="input_url" name="input_url" type="text"
-                placeholder="URL" aria-label="Search">
-        </div>
-        <div class="active-pink-3 active-pink-4 mb-4">
-            <input class="form-control text-center" id="extension" name="extension" type="text"
-                placeholder="extension" aria-label="Search">
-        </div>
-    </form>
-    <!-- spinner when tweets are extracted in the background -->
-    <script type="text/javascript">
-        function spinner() {
-            document.getElementById("spinner").innerHTML = '<div class="spinner-border text-danger" role="status"> <span class="sr-only">Loading...</span> </div>';
-            document.forms[0].submit();
-        }
-    </script>
-    <script>
+<script type="text/javascript">
+    window.onsubmit = function spinner() {
+        var submit_button = document.getElementById("submit-button")
+        var loading_button = document.createElement('div')
+        loading_button.className = "d-flex justify-content-center"
+        loading_button.innerHTML = '<div class="spinner-border text-danger" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+        submit_button.parentNode.replaceChild(loading_button, submit_button);
+    }
+</script>
 
-        document.getElementById('extension').addEventListener('keypress', function (event) {
-            if (event.keyCode == 13) {
-                spinner();
+<div class="container-sm my-5">
+    <div class="row align-self-center">
+        <style>
+            h1 {
+                font-family: 'Allerta Stencil';
+                font-size: 250%;
+                color: #192a56;
+                /* color: #491c2b; */
             }
-        });
-    </script>
-    <div id="spinner"></div>
-    {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-        {% endif %}
-
+        </style>
+        <h1 class="text-center">{{app_name}}</h1> <br />
+    </div>
 </div>
+<div class="container-lg">
+    <form method="POST" id='url-submit-form' action="">
+        {{ form.csrf }}
+        <div class="row">
+            <div class="col-9">
+                <div class="form-outline mb-4">
+                    <input class="form-control text-center" id="input_url" name="input_url" type="url"
+                    placeholder="URL" aria-label="Search">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-outline mb-4">
+                    <input class="form-control text-center" id="extension" name="extension" type="text"
+                        placeholder="extension" aria-label="Search">
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <!-- <div class="d-grid gap-2 col-6 mx-auto justify-content-md-center"> -->
+                <div id="submit-button" class="d-grid gap-2">
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+                </div>
+            <!-- </div> -->
+        </div>
+    </form>    
+</div>
+
 
 <div id="flash"></div>
 {% if invalid %}
 <p>{{ invalid }}</p>
 {% endif %}
 
-{% endblock %}
+<!-- end body block -->
+{% endblock %} 
