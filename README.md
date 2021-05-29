@@ -5,6 +5,8 @@ Extract links from Directory listing based on the extension.
 ## Docker
 
 ```bash
+mkdir -p $(pwd)/files;
+docker pull ghcr.io/jadia/link-extractor:latest && \
 docker run -d --restart unless-stopped \
 --name link-extractor \
 -p 80:80 \
