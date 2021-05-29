@@ -1,10 +1,10 @@
-name: Docker
+name: Test
 
 on:
-  push:
-    branches:
-      - master
-      # - 'junk/workflow'
+  # push:
+  #   branches:
+  #     - master
+  #     # - 'junk/workflow'
   pull_request:
     branches:
       - master
