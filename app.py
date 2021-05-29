@@ -5,7 +5,6 @@ from datetime import datetime as dt
 import shortuuid
 import os
 
-
 URL_TXT_DIR = 'files'
 if not os.path.exists(URL_TXT_DIR):
     os.makedirs(URL_TXT_DIR)
@@ -38,7 +37,7 @@ def index():
         url_list_file_path = os.path.join(URL_TXT_DIR, url_list_file_name)
         with open(url_list_file_path, 'w') as f:
             f.writelines("%s\n" % url for url in url_list)
-
+            
         return render_template('result.html', extension=ext, result=url_list,
                                file_name=url_list_file_name)
     else:
@@ -70,3 +69,4 @@ def not_found(e):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
+    # app.run(host='0.0.0.0', port=4000, debug=True) # Local testing
